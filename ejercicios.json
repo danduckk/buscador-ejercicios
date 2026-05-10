@@ -1,0 +1,475 @@
+[
+  {
+    "id": 1,
+    "titulo": "Contador desde 0 hasta N",
+    "temas": [
+      "bucles",
+      "for",
+      "seq",
+      "lectura de teclado",
+      "read"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que pida al usuario un número N y muestre por pantalla todos los números desde 0 hasta N, uno por línea.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nread -p \"Introduce un número: \" numero\n\nfor i in $(seq 0 $numero); do\n    echo $i\ndone"
+  },
+  {
+    "id": 2,
+    "titulo": "Comprobar si hoy es 21 de abril",
+    "temas": [
+      "fechas",
+      "date",
+      "condicionales",
+      "comparación numérica"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Escribe un script que compruebe si la fecha actual es el día 21 del mes. En caso afirmativo, debe mostrar el mensaje '21 de abril, la primavera está aquí'.",
+    "solucion": "#!/bin/bash\n# Daniel\n\ndia=$(date +\"%d\")\n\nif [ \"$dia\" -eq 21 ]; then\n    echo \"21 de abril, la primavera está aquí\"\nfi"
+  },
+  {
+    "id": 3,
+    "titulo": "Mostrar los números del 1 al 10",
+    "temas": [
+      "bucles",
+      "for",
+      "seq"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que muestre por pantalla los números del 1 al 10, cada uno en una línea distinta.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nfor i in $(seq 1 10); do\n    echo $i\ndone"
+  },
+  {
+    "id": 4,
+    "titulo": "Mostrar fecha y hora actual con formato legible",
+    "temas": [
+      "fechas",
+      "date",
+      "formato",
+      "variables"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Haz un script que muestre por pantalla la fecha y la hora actuales con un formato legible, por ejemplo: 'Hoy es lunes, 21 de abril de 2025 y son las 14:30:25'.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nfecha=$(date +\"%A, %d de %B de %Y\")\nhora=$(date +\"%H:%M:%S\")\necho \"Hoy es $fecha y son las $hora\""
+  },
+  {
+    "id": 5,
+    "titulo": "Comprobar si un usuario y un grupo existen",
+    "temas": [
+      "administración",
+      "usuarios",
+      "grupos",
+      "id",
+      "getent",
+      "condicionales"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que pida un nombre de usuario y un nombre de grupo, y compruebe si existen en el sistema. Debe mostrar un mensaje indicando si existen o no cada uno.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nread -p \"Introduce el nombre de usuario: \" usuario\nread -p \"Introduce el nombre de grupo: \" grupo\n\nif id \"$usuario\" &>/dev/null; then\n    echo \"El usuario '$usuario' existe.\"\nelse\n    echo \"El usuario '$usuario' NO existe.\"\nfi\n\nif getent group \"$grupo\" &>/dev/null; then\n    echo \"El grupo '$grupo' existe.\"\nelse\n    echo \"El grupo '$grupo' NO existe.\"\nfi"
+  },
+  {
+    "id": 6,
+    "titulo": "Detectar si una tecla pulsada es letra, número o especial",
+    "temas": [
+      "lectura de teclado",
+      "read -n",
+      "expresiones regulares",
+      "condicionales"
+    ],
+    "dificultad": "media",
+    "enunciado": "Escribe un script que pida al usuario que pulse una sola tecla y le diga si ha introducido una letra, un número o un carácter especial.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nread -p \"Pulsa una tecla: \" -n 1 tecla\necho\n\nif [[ \"$tecla\" =~ [a-zA-Z] ]]; then\n    echo \"Has introducido una letra.\"\nelif [[ \"$tecla\" =~ [0-9] ]]; then\n    echo \"Has introducido un número.\"\nelse\n    echo \"Has introducido un carácter especial.\"\nfi"
+  },
+  {
+    "id": 7,
+    "titulo": "Tabla de multiplicar pasada por argumento",
+    "temas": [
+      "bucles",
+      "for",
+      "argumentos",
+      "validación",
+      "aritmética"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que reciba un número como argumento y muestre su tabla de multiplicar del 1 al 10. Si no se pasa argumento, mostrar el uso correcto y salir con código de error.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nnumero=$1\n\nif [ -z \"$numero\" ]; then\n    echo \"Uso: ./tablamul.sh <número>\"\n    exit 1\nfi\n\nfor i in $(seq 1 10); do\n    resultado=$(( numero * i ))\n    echo \"$numero x $i = $resultado\"\ndone"
+  },
+  {
+    "id": 8,
+    "titulo": "Comprobar permisos de un fichero",
+    "temas": [
+      "ficheros",
+      "permisos",
+      "argumentos",
+      "test",
+      "-r -w -x"
+    ],
+    "dificultad": "media",
+    "enunciado": "Haz un script que reciba el nombre de un fichero como argumento y compruebe si es legible, modificable y/o ejecutable, mostrando un mensaje por cada permiso que tenga. Si el fichero no existe, debe avisarlo.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nfichero=$1\n\nif [ -z \"$fichero\" ]; then\n    echo \"Uso: ./tipofichero.sh <nombre_fichero>\"\n    exit 1\nfi\n\nif [ ! -e \"$fichero\" ]; then\n    echo \"El fichero '$fichero' no existe.\"\n    exit 1\nfi\n\nif [ -r \"$fichero\" ]; then\n    echo \"El fichero '$fichero' es legible.\"\nfi\n\nif [ -w \"$fichero\" ]; then\n    echo \"El fichero '$fichero' es modificable.\"\nfi\n\nif [ -x \"$fichero\" ]; then\n    echo \"El fichero '$fichero' es ejecutable.\"\nfi"
+  },
+  {
+    "id": 9,
+    "titulo": "Agenda con menú: añadir, buscar, listar, ordenar y borrar",
+    "temas": [
+      "menús",
+      "case",
+      "ficheros",
+      "while",
+      "grep",
+      "sort",
+      "redirección"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Crea un script Agenda.sh con un menú que permita gestionar un archivo LISTA con nombre, dirección y teléfono separados por dos puntos. Las opciones son: 1) Añadir un registro, 2) Buscar (en cualquier campo), 3) Listar todo el archivo, 4) Ordenar el archivo alfabéticamente, 5) Borrar el archivo (con confirmación), 6) Salir. Si el archivo no existe, debe crearlo vacío.",
+    "solucion": "#!/bin/bash\n# Autor: Daniel\n# Agenda con menu para gestionar un archivo LISTA con nombre, direccion y telefono\n\nARCHIVO=\"LISTA\"\n\n# Si no existe el archivo lo creo vacio\nif [ ! -f $ARCHIVO ]\nthen\n\ttouch $ARCHIVO\nfi\n\nopcion=0\n\nwhile [ $opcion -ne 6 ]\ndo\n\techo \"\"\n\techo \"========== AGENDA ==========\"\n\techo \"1. Añadir\"\n\techo \"2. Buscar\"\n\techo \"3. Listar\"\n\techo \"4. Ordenar\"\n\techo \"5. Borrar\"\n\techo \"6. Salir\"\n\techo \"============================\"\n\techo \"Elige una opcion:\"\n\tread opcion\n\n\tcase $opcion in\n\t\t1)\n\t\t\techo \"Nombre:\"\n\t\t\tread nombre\n\t\t\techo \"Direccion:\"\n\t\t\tread direccion\n\t\t\techo \"Telefono:\"\n\t\t\tread telefono\n\t\t\techo \"$nombre:$direccion:$telefono\" >> $ARCHIVO\n\t\t\techo \"Registro añadido\"\n\t\t\t;;\n\t\t2)\n\t\t\techo \"Introduce lo que quieres buscar (nombre, direccion o telefono):\"\n\t\t\tread busqueda\n\t\t\tresultado=$(grep -i \"$busqueda\" $ARCHIVO)\n\t\t\tif [ -z \"$resultado\" ]\n\t\t\tthen\n\t\t\t\techo \"No se ha encontrado nada\"\n\t\t\telse\n\t\t\t\techo \"Resultados:\"\n\t\t\t\techo \"$resultado\"\n\t\t\tfi\n\t\t\t;;\n\t\t3)\n\t\t\tif [ -s $ARCHIVO ]\n\t\t\tthen\n\t\t\t\techo \"--- Contenido de la agenda ---\"\n\t\t\t\tcat $ARCHIVO\n\t\t\telse\n\t\t\t\techo \"La agenda esta vacia\"\n\t\t\tfi\n\t\t\t;;\n\t\t4)\n\t\t\tsort $ARCHIVO -o $ARCHIVO\n\t\t\techo \"Archivo ordenado\"\n\t\t\t;;\n\t\t5)\n\t\t\techo \"Seguro que quieres borrar? (s/n)\"\n\t\t\tread respuesta\n\t\t\tif [ \"$respuesta\" = \"s\" ]\n\t\t\tthen\n\t\t\t\t> $ARCHIVO\n\t\t\t\techo \"Archivo borrado\"\n\t\t\telse\n\t\t\t\techo \"Cancelado\"\n\t\t\tfi\n\t\t\t;;\n\t\t6)\n\t\t\techo \"Saliendo...\"\n\t\t\t;;\n\t\t*)\n\t\t\techo \"Opcion no valida\"\n\t\t\t;;\n\tesac\ndone"
+  },
+  {
+    "id": 10,
+    "titulo": "Conversor de decimal a binario",
+    "temas": [
+      "aritmética",
+      "while",
+      "módulo",
+      "división entera",
+      "conversión de bases"
+    ],
+    "dificultad": "media",
+    "enunciado": "Escribe un script que pida un número decimal y lo convierta a binario, mostrando el resultado. El algoritmo se basa en ir dividiendo entre 2 y guardar los restos en orden inverso.",
+    "solucion": "#!/bin/bash\n# Autor: Daniel\n# Conversor de decimal a binario\n\necho \"Introduce un numero decimal:\"\nread numero\n\n# Guardo el numero original para mostrarlo al final\noriginal=$numero\nbinario=\"\"\n\n# Si el numero es 0 el binario es 0 directamente\nif [ $numero -eq 0 ]\nthen\n\tbinario=\"0\"\nelse\n\t# Voy dividiendo entre 2 y guardando los restos\n\twhile [ $numero -gt 0 ]\n\tdo\n\t\tresto=$((numero % 2))\n\t\tbinario=\"$resto$binario\"\n\t\tnumero=$((numero / 2))\n\tdone\nfi\n\necho \"El numero $original en binario es: $binario\""
+  },
+  {
+    "id": 11,
+    "titulo": "Comprobar si un número es divisible entre otro",
+    "temas": [
+      "aritmética",
+      "módulo",
+      "condicionales",
+      "validación división por cero"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que pida dos números al usuario y compruebe si el primero es divisible entre el segundo. Debe controlar que el segundo no sea cero.",
+    "solucion": "#!/bin/bash\n# Autor: Daniel\n# Pide dos numeros y comprueba si son divisibles\n\necho \"Introduce el primer numero:\"\nread num1\necho \"Introduce el segundo numero:\"\nread num2\n\n# Compruebo que el segundo no sea 0 para que no me pete al dividir\nif [ $num2 -eq 0 ]\nthen\n\techo \"No se puede dividir entre 0\"\n\texit\nfi\n\nresto=$((num1 % num2))\n\nif [ $resto -eq 0 ]\nthen\n\techo \"$num1 SI es divisible entre $num2\"\nelse\n\techo \"$num1 NO es divisible entre $num2\"\nfi"
+  },
+  {
+    "id": 12,
+    "titulo": "Mostrar el menor de dos números",
+    "temas": [
+      "condicionales",
+      "if elif else",
+      "comparación numérica",
+      "lectura de teclado"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Escribe un script que pida dos números al usuario y muestre cuál es el más pequeño. Si son iguales, debe avisarlo.",
+    "solucion": "#!/bin/bash\n# Autor: Daniel\n# Programa que pide dos numeros y muestra el mas pequeño\n\necho \"Introduce el primer numero:\"\nread num1\necho \"Introduce el segundo numero:\"\nread num2\n\nif [ $num1 -lt $num2 ]\nthen\n\techo \"El mas pequeño es: $num1\"\nelif [ $num2 -lt $num1 ]\nthen\n\techo \"El mas pequeño es: $num2\"\nelse\n\techo \"Los dos numeros son iguales\"\nfi"
+  },
+  {
+    "id": 13,
+    "titulo": "Comprobar si una nota es válida",
+    "temas": [
+      "condicionales",
+      "comparación numérica",
+      "validación"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Haz un script que pida una nota y compruebe si es mayor que 10. En caso afirmativo, debe avisar de que la nota es demasiado grande.",
+    "solucion": "#!/bin/bash\n# Autor: Daniel\n# Pide un numero y si es mayor que 10 avisa de que es demasiado grande\n\necho \"Introduce una nota:\"\nread nota\n\nif [ $nota -gt 10 ]\nthen\n\techo \"Nota demasiado grande\"\nfi"
+  },
+  {
+    "id": 14,
+    "titulo": "Comprobar si un número es par o impar",
+    "temas": [
+      "aritmética",
+      "módulo",
+      "condicionales"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que pida un número al usuario e indique si es par o impar.",
+    "solucion": "#!/bin/bash\n# Autor: Daniel\n# Dice si un numero es par o impar\n\necho \"Introduce un numero:\"\nread numero\n\nresto=$((numero % 2))\n\nif [ $resto -eq 0 ]\nthen\n\techo \"El numero $numero es PAR\"\nelse\n\techo \"El numero $numero es IMPAR\"\nfi"
+  },
+  {
+    "id": 15,
+    "titulo": "Saludo con menú y funciones (saludar, fecha, uso de disco)",
+    "temas": [
+      "menús",
+      "funciones",
+      "case",
+      "while",
+      "date",
+      "df"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script saludo.sh que muestre un pequeño menú y use funciones para organizar las tareas. Habrá una función principal en la que aparezca el siguiente menú: 1. Saludar, 2. Mostrar fecha, 3. Uso de disco, 4. Salir. En las opciones 1, 2 y 3 se llamará a unas sencillas funciones.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nsaludar() {\n    read -p \"¿Cómo te llamas? \" nombre\n    echo \"Hola, $nombre. ¡Bienvenido!\"\n}\n\nmostrar_fecha() {\n    echo \"Fecha actual: $(date +\"%A, %d de %B de %Y - %H:%M:%S\")\"\n}\n\nuso_disco() {\n    echo \"--- Uso de disco ---\"\n    df -h\n}\n\nmenu_principal() {\n    local opcion=0\n    while [ $opcion -ne 4 ]; do\n        echo \"\"\n        echo \"====MENÚ===\"\n        echo \"1. Saludar\"\n        echo \"2. Mostrar fecha\"\n        echo \"3. Uso de disco\"\n        echo \"4. Salir\"\n        read -p \"Elige una opción: \" opcion\n\n        case $opcion in\n            1) saludar ;;\n            2) mostrar_fecha ;;\n            3) uso_disco ;;\n            4) echo \"Saliendo...\" ;;\n            *) echo \"Opción no válida\" ;;\n        esac\n    done\n}\n\nmenu_principal"
+  },
+  {
+    "id": 16,
+    "titulo": "Mantenimiento de archivo LISTA con nombres",
+    "temas": [
+      "menús",
+      "case",
+      "ficheros",
+      "grep",
+      "sort",
+      "while"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script nombres.sh que permita mediante un menú el mantenimiento de un archivo LISTA con el nombre de varias personas. Las opciones son: 1) Añadir un nombre, 2) Buscar si está o no un nombre, 3) Listar el archivo, 4) Ordenar el archivo y mostrarlo en pantalla, 5) Borrar el archivo.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nARCHIVO=\"LISTA\"\n\nif [ ! -f \"$ARCHIVO\" ]; then\n    touch \"$ARCHIVO\"\nfi\n\nopcion=0\nwhile [ $opcion -ne 6 ]; do\n    echo \"\"\n    echo \"===== NOMBRES =====\"\n    echo \"1. Añadir nombre\"\n    echo \"2. Buscar nombre\"\n    echo \"3. Listar archivo\"\n    echo \"4. Ordenar y mostrar\"\n    echo \"5. Borrar archivo\"\n    echo \"6. Salir\"\n    read -p \"Elige opción: \" opcion\n\n    case $opcion in\n        1)\n            read -p \"Nombre a añadir: \" nombre\n            echo \"$nombre\" >> \"$ARCHIVO\"\n            echo \"Añadido.\"\n            ;;\n        2)\n            read -p \"Nombre a buscar: \" nombre\n            if grep -qi \"^$nombre$\" \"$ARCHIVO\"; then\n                echo \"El nombre '$nombre' SÍ está.\"\n            else\n                echo \"El nombre '$nombre' NO está.\"\n            fi\n            ;;\n        3)\n            cat \"$ARCHIVO\"\n            ;;\n        4)\n            sort \"$ARCHIVO\"\n            ;;\n        5)\n            > \"$ARCHIVO\"\n            echo \"Archivo borrado.\"\n            ;;\n        6)\n            echo \"Saliendo...\"\n            ;;\n        *)\n            echo \"Opción no válida\"\n            ;;\n    esac\ndone"
+  },
+  {
+    "id": 17,
+    "titulo": "Gestión de ciudades.sh con temperatura y habitantes",
+    "temas": [
+      "menús",
+      "case",
+      "ficheros",
+      "sort",
+      "awk",
+      "campos"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Crea un script Ciudades.sh que muestre un menú de opciones que permita: 1) Mostrar el contenido del fichero por orden alfabético de ciudades, 2) Obtener la temperatura media de la ciudad que se indique, 3) Mostrar el contenido del fichero ordenado por habitantes de forma decreciente, sin la temperatura. La primera línea del fichero tras la del #! debe contener el nombre y apellidos del alumno. El fichero ciudades_espana.txt contiene líneas con formato: ciudad:habitantes:temperatura.",
+    "solucion": "#!/bin/bash\n# Daniel Muñoz\n\nFICHERO=\"ciudades_espana.txt\"\n\nif [ ! -f \"$FICHERO\" ]; then\n    echo \"No existe el fichero $FICHERO\"\n    exit 1\nfi\n\nopcion=0\nwhile [ $opcion -ne 4 ]; do\n    echo \"\"\n    echo \"===== CIUDADES =====\"\n    echo \"1. Listar por orden alfabético\"\n    echo \"2. Temperatura media de una ciudad\"\n    echo \"3. Listar por habitantes (decreciente, sin temperatura)\"\n    echo \"4. Salir\"\n    read -p \"Elige opción: \" opcion\n\n    case $opcion in\n        1)\n            sort -t\":\" -k1,1 \"$FICHERO\"\n            ;;\n        2)\n            read -p \"Nombre de la ciudad: \" ciudad\n            temp=$(grep -i \"^$ciudad:\" \"$FICHERO\" | cut -d\":\" -f3)\n            if [ -z \"$temp\" ]; then\n                echo \"Ciudad no encontrada.\"\n            else\n                echo \"Temperatura de $ciudad: $temp\"\n            fi\n            ;;\n        3)\n            sort -t\":\" -k2,2 -nr \"$FICHERO\" | awk -F\":\" '{print $1\":\"$2}'\n            ;;\n        4)\n            echo \"Saliendo...\"\n            ;;\n        *)\n            echo \"Opción no válida\"\n            ;;\n    esac\ndone"
+  },
+  {
+    "id": 18,
+    "titulo": "Calcular el factorial de un número",
+    "temas": [
+      "bucles",
+      "for",
+      "seq",
+      "aritmética",
+      "validación"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que pida un número entero positivo y calcule su factorial (n!). Si el número es negativo, debe avisar y salir.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nread -p \"Introduce un número: \" n\n\nif [ $n -lt 0 ]; then\n    echo \"El número debe ser positivo\"\n    exit 1\nfi\n\nresultado=1\nfor i in $(seq 1 $n); do\n    resultado=$((resultado * i))\ndone\n\necho \"$n! = $resultado\""
+  },
+  {
+    "id": 19,
+    "titulo": "Adivinar un número aleatorio entre 1 y 100",
+    "temas": [
+      "RANDOM",
+      "while",
+      "condicionales",
+      "contadores"
+    ],
+    "dificultad": "media",
+    "enunciado": "Haz un script que genere un número aleatorio entre 1 y 100 y vaya pidiendo al usuario que lo adivine. Para cada intento debe indicar si el número buscado es mayor o menor. Cuando acierte, mostrar cuántos intentos ha necesitado.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nnumero=$((RANDOM % 100 + 1))\nintentos=0\nacertado=0\n\nwhile [ $acertado -eq 0 ]; do\n    read -p \"Introduce un número (1-100): \" intento\n    intentos=$((intentos + 1))\n\n    if [ $intento -lt $numero ]; then\n        echo \"El número buscado es MAYOR\"\n    elif [ $intento -gt $numero ]; then\n        echo \"El número buscado es MENOR\"\n    else\n        echo \"¡Acertaste en $intentos intentos!\"\n        acertado=1\n    fi\ndone"
+  },
+  {
+    "id": 20,
+    "titulo": "Calculadora con menú (sumar, restar, multiplicar, dividir)",
+    "temas": [
+      "menús",
+      "case",
+      "while",
+      "aritmética",
+      "validación"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script con un menú que muestre 4 opciones (sumar, restar, multiplicar, dividir) y una opción para salir. Pide dos números al usuario y realiza la operación elegida. Repite el menú hasta que se elija salir.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nopcion=0\nwhile [ $opcion -ne 5 ]; do\n    echo \"\"\n    echo \"===== CALCULADORA =====\"\n    echo \"1. Sumar\"\n    echo \"2. Restar\"\n    echo \"3. Multiplicar\"\n    echo \"4. Dividir\"\n    echo \"5. Salir\"\n    read -p \"Elige opción: \" opcion\n\n    if [ $opcion -ge 1 ] && [ $opcion -le 4 ]; then\n        read -p \"Primer número: \" a\n        read -p \"Segundo número: \" b\n\n        case $opcion in\n            1) echo \"$a + $b = $((a + b))\" ;;\n            2) echo \"$a - $b = $((a - b))\" ;;\n            3) echo \"$a * $b = $((a * b))\" ;;\n            4)\n                if [ $b -eq 0 ]; then\n                    echo \"Error: división entre 0\"\n                else\n                    echo \"$a / $b = $((a / b))\"\n                fi\n                ;;\n        esac\n    fi\ndone"
+  },
+  {
+    "id": 21,
+    "titulo": "Contar líneas, palabras y caracteres de un fichero",
+    "temas": [
+      "ficheros",
+      "wc",
+      "argumentos",
+      "validación"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Escribe un script que reciba un fichero como argumento y muestre cuántas líneas, palabras y caracteres tiene. Si no se pasa argumento o el fichero no existe, mostrar error.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nfichero=$1\n\nif [ -z \"$fichero\" ]; then\n    echo \"Uso: $0 <fichero>\"\n    exit 1\nfi\n\nif [ ! -f \"$fichero\" ]; then\n    echo \"El fichero '$fichero' no existe\"\n    exit 2\nfi\n\nlineas=$(wc -l < \"$fichero\")\npalabras=$(wc -w < \"$fichero\")\ncaracteres=$(wc -c < \"$fichero\")\n\necho \"Líneas: $lineas\"\necho \"Palabras: $palabras\"\necho \"Caracteres: $caracteres\""
+  },
+  {
+    "id": 22,
+    "titulo": "Buscar una palabra en un fichero y contar coincidencias",
+    "temas": [
+      "grep",
+      "ficheros",
+      "argumentos",
+      "contadores"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que reciba dos argumentos: una palabra y un fichero. Debe mostrar las líneas que contienen la palabra y, al final, indicar cuántas coincidencias se han encontrado.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ $# -ne 2 ]; then\n    echo \"Uso: $0 <palabra> <fichero>\"\n    exit 1\nfi\n\npalabra=$1\nfichero=$2\n\nif [ ! -f \"$fichero\" ]; then\n    echo \"El fichero '$fichero' no existe\"\n    exit 2\nfi\n\ngrep -n \"$palabra\" \"$fichero\"\ntotal=$(grep -c \"$palabra\" \"$fichero\")\necho \"Total de coincidencias: $total\""
+  },
+  {
+    "id": 23,
+    "titulo": "Comprobar si una cadena es palíndromo",
+    "temas": [
+      "cadenas",
+      "rev",
+      "tr",
+      "comparación de strings"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que reciba una cadena por argumento e indique si es palíndromo (se lee igual del derecho que del revés). Ignora mayúsculas y minúsculas.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <cadena>\"\n    exit 1\nfi\n\ncadena=$(echo \"$1\" | tr '[:upper:]' '[:lower:]')\ninversa=$(echo \"$cadena\" | rev)\n\nif [ \"$cadena\" = \"$inversa\" ]; then\n    echo \"'$1' SÍ es palíndromo\"\nelse\n    echo \"'$1' NO es palíndromo\"\nfi"
+  },
+  {
+    "id": 24,
+    "titulo": "Backup comprimido de un directorio con fecha",
+    "temas": [
+      "tar",
+      "fechas",
+      "date",
+      "ficheros",
+      "directorios"
+    ],
+    "dificultad": "media",
+    "enunciado": "Haz un script que reciba un directorio como argumento y genere un fichero comprimido tar.gz del mismo, cuyo nombre incluya la fecha y hora actual con formato AAAAMMDD_HHMM.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <directorio>\"\n    exit 1\nfi\n\nif [ ! -d \"$1\" ]; then\n    echo \"'$1' no es un directorio\"\n    exit 2\nfi\n\nfecha=$(date +\"%Y%m%d_%H%M\")\nnombre=$(basename \"$1\")\ntar -czf \"${nombre}_${fecha}.tar.gz\" \"$1\"\necho \"Backup creado: ${nombre}_${fecha}.tar.gz\""
+  },
+  {
+    "id": 25,
+    "titulo": "Mostrar números primos hasta N",
+    "temas": [
+      "bucles anidados",
+      "for",
+      "aritmética",
+      "primos"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que reciba un número N por argumento y muestre todos los números primos desde 2 hasta N.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <N>\"\n    exit 1\nfi\n\nN=$1\nfor ((num=2; num<=N; num++)); do\n    es_primo=1\n    for ((i=2; i*i<=num; i++)); do\n        if [ $((num % i)) -eq 0 ]; then\n            es_primo=0\n            break\n        fi\n    done\n    if [ $es_primo -eq 1 ]; then\n        echo -n \"$num \"\n    fi\ndone\necho"
+  },
+  {
+    "id": 26,
+    "titulo": "Renombrar ficheros cambiando extensión",
+    "temas": [
+      "bucles",
+      "for",
+      "ficheros",
+      "parameter expansion",
+      "mv"
+    ],
+    "dificultad": "media",
+    "enunciado": "Haz un script que reciba como argumentos un directorio y dos extensiones (origen y destino). Debe renombrar todos los ficheros del directorio que tengan la extensión origen a la extensión destino. Por ejemplo: ./script.sh /tmp txt md cambiará todos los .txt por .md.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ $# -ne 3 ]; then\n    echo \"Uso: $0 <directorio> <ext_origen> <ext_destino>\"\n    exit 1\nfi\n\ndir=$1\nori=$2\ndst=$3\n\nfor f in \"$dir\"/*.\"$ori\"; do\n    [ -e \"$f\" ] || continue\n    nuevo=\"${f%.$ori}.$dst\"\n    mv \"$f\" \"$nuevo\"\n    echo \"Renombrado: $f -> $nuevo\"\ndone"
+  },
+  {
+    "id": 27,
+    "titulo": "Listar ficheros de un directorio por tamaño",
+    "temas": [
+      "ficheros",
+      "directorios",
+      "ls",
+      "ordenación"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que reciba como argumento un directorio y liste los ficheros que contiene ordenados por tamaño descendente, mostrando el tamaño en formato legible (KB, MB...).",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <directorio>\"\n    exit 1\nfi\n\nif [ ! -d \"$1\" ]; then\n    echo \"'$1' no es un directorio\"\n    exit 2\nfi\n\nls -lhS \"$1\" | grep -v \"^total\" | grep -v \"^d\""
+  },
+  {
+    "id": 28,
+    "titulo": "Contar usuarios conectados al sistema",
+    "temas": [
+      "who",
+      "awk",
+      "sort",
+      "pipes",
+      "wc"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Escribe un script que muestre cuántos usuarios están conectados al sistema y sus nombres sin repeticiones.",
+    "solucion": "#!/bin/bash\n# Daniel\n\ntotal=$(who | awk '{print $1}' | sort -u | wc -l)\necho \"Hay $total usuarios conectados:\"\nwho | awk '{print $1}' | sort -u"
+  },
+  {
+    "id": 29,
+    "titulo": "Estadísticas de notas desde un fichero",
+    "temas": [
+      "ficheros",
+      "while read",
+      "aritmética",
+      "bc",
+      "contadores"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Escribe un script que lea un fichero con notas (un número por línea, entre 0 y 10) y calcule la media, la nota máxima, la mínima, el número de aprobados (>=5) y el número de suspensos.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ] || [ ! -f \"$1\" ]; then\n    echo \"Uso: $0 <fichero_notas>\"\n    exit 1\nfi\n\ntotal=0\nsuma=0\nmax=-1\nmin=11\naprobados=0\nsuspensos=0\n\nwhile IFS= read -r nota; do\n    [ -z \"$nota\" ] && continue\n    suma=$(echo \"$suma + $nota\" | bc)\n    total=$((total + 1))\n    if (( $(echo \"$nota > $max\" | bc -l) )); then max=$nota; fi\n    if (( $(echo \"$nota < $min\" | bc -l) )); then min=$nota; fi\n    if (( $(echo \"$nota >= 5\" | bc -l) )); then\n        aprobados=$((aprobados + 1))\n    else\n        suspensos=$((suspensos + 1))\n    fi\ndone < \"$1\"\n\nmedia=$(echo \"scale=2; $suma / $total\" | bc)\necho \"Total notas: $total\"\necho \"Media: $media\"\necho \"Máxima: $max\"\necho \"Mínima: $min\"\necho \"Aprobados: $aprobados\"\necho \"Suspensos: $suspensos\""
+  },
+  {
+    "id": 30,
+    "titulo": "Crear usuarios desde un fichero",
+    "temas": [
+      "administración",
+      "useradd",
+      "while read",
+      "permisos root",
+      "EUID"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Crea un script que lea un fichero donde cada línea contiene un nombre de usuario, y cree dichos usuarios en el sistema. Si el usuario ya existe, debe avisar y continuar. El script debe ejecutarse como root.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ \"$EUID\" -ne 0 ]; then\n    echo \"Este script debe ejecutarse como root\"\n    exit 1\nfi\n\nif [ -z \"$1\" ] || [ ! -f \"$1\" ]; then\n    echo \"Uso: $0 <fichero_usuarios>\"\n    exit 2\nfi\n\nwhile IFS= read -r usuario; do\n    [ -z \"$usuario\" ] && continue\n    if id \"$usuario\" &>/dev/null; then\n        echo \"El usuario '$usuario' ya existe.\"\n    else\n        useradd -m \"$usuario\"\n        echo \"Usuario '$usuario' creado.\"\n    fi\ndone < \"$1\""
+  },
+  {
+    "id": 31,
+    "titulo": "Comprobar si un año es bisiesto",
+    "temas": [
+      "condicionales",
+      "operadores lógicos",
+      "aritmética",
+      "módulo"
+    ],
+    "dificultad": "media",
+    "enunciado": "Escribe un script que reciba un año por argumento e indique si es bisiesto. Un año es bisiesto si es divisible entre 4 pero no entre 100, salvo que también sea divisible entre 400.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <año>\"\n    exit 1\nfi\n\nanio=$1\n\nif (( (anio % 4 == 0 && anio % 100 != 0) || anio % 400 == 0 )); then\n    echo \"$anio es bisiesto\"\nelse\n    echo \"$anio NO es bisiesto\"\nfi"
+  },
+  {
+    "id": 32,
+    "titulo": "Suma de los N primeros números naturales",
+    "temas": [
+      "bucles",
+      "for",
+      "aritmética",
+      "acumulador"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que pida un número N y muestre la suma de todos los números naturales desde 1 hasta N.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nread -p \"Introduce N: \" n\n\nsuma=0\nfor i in $(seq 1 $n); do\n    suma=$((suma + i))\ndone\n\necho \"La suma de 1 a $n es $suma\""
+  },
+  {
+    "id": 33,
+    "titulo": "Contar cuántos ficheros hay en un directorio",
+    "temas": [
+      "ficheros",
+      "directorios",
+      "ls",
+      "wc",
+      "argumentos"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Haz un script que reciba un directorio como argumento y muestre cuántos ficheros (no directorios) hay en él.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ] || [ ! -d \"$1\" ]; then\n    echo \"Uso: $0 <directorio>\"\n    exit 1\nfi\n\ntotal=$(ls -l \"$1\" | grep \"^-\" | wc -l)\necho \"El directorio '$1' contiene $total ficheros\""
+  },
+  {
+    "id": 34,
+    "titulo": "Mostrar el mayor de tres números",
+    "temas": [
+      "condicionales",
+      "if elif",
+      "comparación numérica"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que pida tres números al usuario y muestre cuál es el mayor.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nread -p \"Primer número: \" a\nread -p \"Segundo número: \" b\nread -p \"Tercer número: \" c\n\nif [ $a -ge $b ] && [ $a -ge $c ]; then\n    mayor=$a\nelif [ $b -ge $a ] && [ $b -ge $c ]; then\n    mayor=$b\nelse\n    mayor=$c\nfi\n\necho \"El mayor es: $mayor\""
+  },
+  {
+    "id": 35,
+    "titulo": "Comprobar si un argumento es un número",
+    "temas": [
+      "expresiones regulares",
+      "validación",
+      "argumentos"
+    ],
+    "dificultad": "media",
+    "enunciado": "Escribe un script que reciba un argumento y compruebe si es un número entero (positivo o negativo). Mostrar mensaje en consecuencia.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <valor>\"\n    exit 1\nfi\n\nif [[ \"$1\" =~ ^-?[0-9]+$ ]]; then\n    echo \"'$1' SÍ es un número entero\"\nelse\n    echo \"'$1' NO es un número entero\"\nfi"
+  }
+]

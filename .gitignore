@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Caché del buscador
+embeddings_cache.pkl
+
+# IDE
+.idea/
+.vscode/
