@@ -471,5 +471,205 @@
     "dificultad": "media",
     "enunciado": "Escribe un script que reciba un argumento y compruebe si es un número entero (positivo o negativo). Mostrar mensaje en consecuencia.",
     "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <valor>\"\n    exit 1\nfi\n\nif [[ \"$1\" =~ ^-?[0-9]+$ ]]; then\n    echo \"'$1' SÍ es un número entero\"\nelse\n    echo \"'$1' NO es un número entero\"\nfi"
+  },
+  {
+    "id": 36,
+    "titulo": "Mostrar las variables de entorno PATH y HOME",
+    "temas": [
+      "variables de entorno",
+      "PATH",
+      "HOME",
+      "echo"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que muestre por pantalla el contenido de las variables de entorno PATH y HOME del usuario actual, indicando claramente qué es cada cosa.",
+    "solucion": "#!/bin/bash\n# Daniel\n\necho \"Tu PATH es: $PATH\"\necho \"Tu HOME es: $HOME\"\necho \"Usuario actual: $USER\""
+  },
+  {
+    "id": 37,
+    "titulo": "Extraer la extensión de un fichero",
+    "temas": [
+      "cadenas",
+      "parameter expansion",
+      "argumentos"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Escribe un script que reciba un nombre de fichero por argumento y muestre solo su extensión. Por ejemplo, para 'documento.pdf' debe mostrar 'pdf'.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <fichero>\"\n    exit 1\nfi\n\n# ${var##*.} elimina todo hasta el último punto, dejando solo la extensión\nextension=\"${1##*.}\"\necho \"La extensión de '$1' es: $extension\""
+  },
+  {
+    "id": 38,
+    "titulo": "Contar cuántos procesos del usuario están corriendo",
+    "temas": [
+      "procesos",
+      "ps",
+      "wc",
+      "pipes"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Haz un script que muestre cuántos procesos tiene en marcha el usuario que lo ejecuta.",
+    "solucion": "#!/bin/bash\n# Daniel\n\ntotal=$(ps -u \"$USER\" --no-headers | wc -l)\necho \"El usuario $USER tiene $total procesos en marcha\""
+  },
+  {
+    "id": 39,
+    "titulo": "Mostrar el espacio libre del disco",
+    "temas": [
+      "disco",
+      "df",
+      "argumentos opcionales"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Crea un script que muestre el espacio libre del disco en formato legible. Si recibe un punto de montaje por argumento (por ejemplo /home), muestra solo el de ese punto.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    df -h\nelse\n    df -h \"$1\"\nfi"
+  },
+  {
+    "id": 40,
+    "titulo": "Convertir un texto a mayúsculas",
+    "temas": [
+      "cadenas",
+      "tr",
+      "argumentos"
+    ],
+    "dificultad": "facil",
+    "enunciado": "Escribe un script que reciba una cadena por argumento y la muestre en mayúsculas.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <cadena>\"\n    exit 1\nfi\n\nresultado=$(echo \"$1\" | tr '[:lower:]' '[:upper:]')\necho \"$resultado\""
+  },
+  {
+    "id": 41,
+    "titulo": "Matar un proceso por nombre",
+    "temas": [
+      "procesos",
+      "pgrep",
+      "kill",
+      "argumentos"
+    ],
+    "dificultad": "media",
+    "enunciado": "Haz un script que reciba el nombre de un proceso por argumento. Debe mostrar cuántas instancias se están ejecutando y preguntar al usuario si quiere matarlas. Si responde 's', las elimina todas.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <nombre_proceso>\"\n    exit 1\nfi\n\npids=$(pgrep \"$1\")\nif [ -z \"$pids\" ]; then\n    echo \"No hay procesos llamados '$1' en ejecución\"\n    exit 0\nfi\n\ntotal=$(echo \"$pids\" | wc -l)\necho \"Hay $total proceso(s) llamados '$1'\"\nread -p \"¿Quieres matarlos? (s/n): \" resp\n\nif [ \"$resp\" = \"s\" ]; then\n    pkill \"$1\"\n    echo \"Procesos eliminados\"\nelse\n    echo \"Cancelado\"\nfi"
+  },
+  {
+    "id": 42,
+    "titulo": "Cambiar permisos de todos los .sh de un directorio",
+    "temas": [
+      "permisos",
+      "chmod",
+      "for",
+      "ficheros",
+      "bucles"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que reciba un directorio por argumento y dé permisos de ejecución (chmod +x) a todos los ficheros .sh que contenga. Debe mostrar por pantalla cada fichero al que se le aplican los permisos.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ] || [ ! -d \"$1\" ]; then\n    echo \"Uso: $0 <directorio>\"\n    exit 1\nfi\n\nfor f in \"$1\"/*.sh; do\n    [ -e \"$f\" ] || continue\n    chmod +x \"$f\"\n    echo \"Permisos de ejecución añadidos a: $f\"\ndone"
+  },
+  {
+    "id": 43,
+    "titulo": "Calcular cuántos días faltan para una fecha",
+    "temas": [
+      "fechas",
+      "date",
+      "aritmética",
+      "argumentos"
+    ],
+    "dificultad": "media",
+    "enunciado": "Escribe un script que reciba una fecha futura por argumento en formato AAAA-MM-DD y calcule cuántos días faltan desde hoy. Si la fecha es pasada, debe avisarlo.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <AAAA-MM-DD>\"\n    exit 1\nfi\n\n# Convertimos ambas fechas a segundos desde 1970 (epoch) y restamos\nfecha_objetivo=$(date -d \"$1\" +%s 2>/dev/null)\nif [ -z \"$fecha_objetivo\" ]; then\n    echo \"Formato de fecha no válido\"\n    exit 2\nfi\n\nhoy=$(date +%s)\ndiferencia=$(( (fecha_objetivo - hoy) / 86400 ))\n\nif [ $diferencia -lt 0 ]; then\n    echo \"Esa fecha ya pasó hace $((diferencia * -1)) días\"\nelif [ $diferencia -eq 0 ]; then\n    echo \"¡Es hoy!\"\nelse\n    echo \"Faltan $diferencia días para $1\"\nfi"
+  },
+  {
+    "id": 44,
+    "titulo": "Procesar un CSV: campos separados por punto y coma",
+    "temas": [
+      "csv",
+      "ficheros",
+      "IFS",
+      "while read",
+      "cut"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que lea un fichero CSV con líneas con formato 'nombre;edad;ciudad' y muestre por pantalla cada registro con un formato legible, por ejemplo: 'Daniel (20 años) vive en Madrid'.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ] || [ ! -f \"$1\" ]; then\n    echo \"Uso: $0 <fichero.csv>\"\n    exit 1\nfi\n\n# IFS=\";\" hace que read divida la línea por el punto y coma\nwhile IFS=\";\" read -r nombre edad ciudad; do\n    [ -z \"$nombre\" ] && continue\n    echo \"$nombre ($edad años) vive en $ciudad\"\ndone < \"$1\""
+  },
+  {
+    "id": 45,
+    "titulo": "Buscar duplicados en un fichero",
+    "temas": [
+      "sort",
+      "uniq",
+      "ficheros",
+      "pipes"
+    ],
+    "dificultad": "media",
+    "enunciado": "Haz un script que reciba un fichero por argumento y muestre las líneas que aparecen duplicadas, indicando junto a cada una cuántas veces aparece.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ] || [ ! -f \"$1\" ]; then\n    echo \"Uso: $0 <fichero>\"\n    exit 1\nfi\n\n# sort ordena las líneas (uniq necesita líneas adyacentes para detectar duplicados)\n# uniq -c cuenta las repeticiones\n# awk filtra las que aparecen más de una vez\nsort \"$1\" | uniq -c | awk '$1 > 1 {print $1, \"veces:\", substr($0, index($0, $2))}'\n\n# Mostrar mensaje si no hay duplicados\nif ! sort \"$1\" | uniq -d | grep -q .; then\n    echo \"No se encontraron duplicados\"\nfi"
+  },
+  {
+    "id": 46,
+    "titulo": "Generador de contraseñas aleatorias",
+    "temas": [
+      "aleatorios",
+      "RANDOM",
+      "cadenas",
+      "bucles",
+      "argumentos"
+    ],
+    "dificultad": "media",
+    "enunciado": "Escribe un script que reciba un número por argumento (longitud) y genere una contraseña aleatoria de esa longitud combinando letras mayúsculas, minúsculas y números.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <longitud>\"\n    exit 1\nfi\n\n# Cogemos bytes aleatorios de /dev/urandom, los filtramos para quedarnos solo\n# con caracteres alfanuméricos, y cortamos a la longitud pedida\npassword=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c \"$1\")\necho \"Contraseña generada: $password\""
+  },
+  {
+    "id": 47,
+    "titulo": "Comprobar si un host responde a ping",
+    "temas": [
+      "red",
+      "ping",
+      "condicionales",
+      "argumentos"
+    ],
+    "dificultad": "media",
+    "enunciado": "Crea un script que reciba una dirección IP o nombre de host por argumento y compruebe si responde a ping. Debe enviar solo 1 paquete y esperar máximo 2 segundos.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <host>\"\n    exit 1\nfi\n\n# -c 1 envía 1 paquete, -W 2 espera 2 segundos como máximo\n# &>/dev/null oculta la salida; nos quedamos solo con el código de retorno\nif ping -c 1 -W 2 \"$1\" &>/dev/null; then\n    echo \"$1 responde correctamente\"\nelse\n    echo \"$1 NO responde\"\nfi"
+  },
+  {
+    "id": 48,
+    "titulo": "Backup incremental: solo ficheros modificados hoy",
+    "temas": [
+      "find",
+      "tar",
+      "fechas",
+      "directorios",
+      "backups"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Haz un script que reciba un directorio origen y otro destino. Debe crear un fichero tar.gz en el destino que contenga solo los ficheros del origen que se hayan modificado en las últimas 24 horas. El nombre del backup debe incluir la fecha actual.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ $# -ne 2 ]; then\n    echo \"Uso: $0 <directorio_origen> <directorio_destino>\"\n    exit 1\nfi\n\norigen=$1\ndestino=$2\n\nif [ ! -d \"$origen\" ] || [ ! -d \"$destino\" ]; then\n    echo \"Origen o destino no son directorios válidos\"\n    exit 2\nfi\n\nfecha=$(date +\"%Y%m%d_%H%M\")\nnombre_backup=\"$destino/backup_$(basename \"$origen\")_$fecha.tar.gz\"\n\n# find busca ficheros modificados hace menos de 1 día (-mtime -1)\n# y se los pasa a tar a través de un pipe\nficheros=$(find \"$origen\" -type f -mtime -1)\n\nif [ -z \"$ficheros\" ]; then\n    echo \"No hay ficheros modificados en las últimas 24h\"\n    exit 0\nfi\n\necho \"$ficheros\" | tar -czf \"$nombre_backup\" -T -\necho \"Backup creado: $nombre_backup\"\necho \"Ficheros incluidos: $(echo \"$ficheros\" | wc -l)\""
+  },
+  {
+    "id": 49,
+    "titulo": "Monitorizar uso de CPU y memoria de un proceso",
+    "temas": [
+      "procesos",
+      "ps",
+      "bucles",
+      "while",
+      "argumentos",
+      "sleep"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Crea un script que reciba el PID de un proceso y monitorice cada 2 segundos su uso de CPU y memoria. Debe mostrar las medidas hasta que se pulse Ctrl+C o el proceso muera. Avisar si el PID no existe.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nif [ -z \"$1\" ]; then\n    echo \"Uso: $0 <PID>\"\n    exit 1\nfi\n\npid=$1\n\nif ! kill -0 \"$pid\" 2>/dev/null; then\n    echo \"El proceso con PID $pid no existe\"\n    exit 2\nfi\n\necho \"Monitorizando PID $pid. Pulsa Ctrl+C para salir.\"\necho \"Tiempo    | CPU%   | MEM%\"\necho \"----------+--------+--------\"\n\nwhile kill -0 \"$pid\" 2>/dev/null; do\n    # ps con -o permite seleccionar columnas concretas\n    stats=$(ps -p \"$pid\" -o %cpu,%mem --no-headers)\n    hora=$(date +\"%H:%M:%S\")\n    echo \"$hora | $stats\"\n    sleep 2\ndone\n\necho \"El proceso $pid ha terminado\""
+  },
+  {
+    "id": 50,
+    "titulo": "Gestor de tareas pendientes (TODO) con prioridades",
+    "temas": [
+      "menús",
+      "case",
+      "ficheros",
+      "arrays",
+      "funciones",
+      "while"
+    ],
+    "dificultad": "dificil",
+    "enunciado": "Crea un script todo.sh que gestione una lista de tareas guardadas en el fichero TAREAS, con formato 'prioridad|estado|descripción' (prioridad: alta/media/baja, estado: pendiente/hecha). El menú debe permitir: 1) Añadir tarea, 2) Listar (opcionalmente filtradas por estado), 3) Marcar como hecha por número, 4) Borrar tarea por número, 5) Listar solo las de prioridad alta pendientes, 6) Salir.",
+    "solucion": "#!/bin/bash\n# Daniel\n\nARCHIVO=\"TAREAS\"\n\n# Crear el fichero si no existe\n[ -f \"$ARCHIVO\" ] || touch \"$ARCHIVO\"\n\nlistar_tareas() {\n    local filtro=$1\n    if [ ! -s \"$ARCHIVO\" ]; then\n        echo \"(No hay tareas)\"\n        return\n    fi\n    local n=1\n    while IFS=\"|\" read -r prio estado desc; do\n        if [ -z \"$filtro\" ] || [ \"$estado\" = \"$filtro\" ]; then\n            echo \"$n) [$prio][$estado] $desc\"\n        fi\n        n=$((n + 1))\n    done < \"$ARCHIVO\"\n}\n\nopcion=0\nwhile [ \"$opcion\" != \"6\" ]; do\n    echo \"\"\n    echo \"===== GESTOR DE TAREAS =====\"\n    echo \"1. Añadir tarea\"\n    echo \"2. Listar todas\"\n    echo \"3. Marcar como hecha\"\n    echo \"4. Borrar tarea\"\n    echo \"5. Listar pendientes de prioridad alta\"\n    echo \"6. Salir\"\n    read -p \"Opción: \" opcion\n\n    case $opcion in\n        1)\n            read -p \"Prioridad (alta/media/baja): \" prio\n            read -p \"Descripción: \" desc\n            echo \"$prio|pendiente|$desc\" >> \"$ARCHIVO\"\n            echo \"Tarea añadida\"\n            ;;\n        2)\n            listar_tareas\n            ;;\n        3)\n            listar_tareas\n            read -p \"Número a marcar como hecha: \" num\n            # sed cambia 'pendiente' por 'hecha' SOLO en la línea $num\n            sed -i \"${num}s/|pendiente|/|hecha|/\" \"$ARCHIVO\"\n            echo \"Tarea marcada como hecha\"\n            ;;\n        4)\n            listar_tareas\n            read -p \"Número a borrar: \" num\n            sed -i \"${num}d\" \"$ARCHIVO\"\n            echo \"Tarea borrada\"\n            ;;\n        5)\n            # Filtramos las que tienen prioridad alta Y están pendientes\n            grep \"^alta|pendiente|\" \"$ARCHIVO\" || echo \"(No hay tareas urgentes pendientes)\"\n            ;;\n        6)\n            echo \"Hasta luego\"\n            ;;\n        *)\n            echo \"Opción no válida\"\n            ;;\n    esac\ndone"
   }
 ]
